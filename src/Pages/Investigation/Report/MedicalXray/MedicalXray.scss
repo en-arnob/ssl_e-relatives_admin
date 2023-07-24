@@ -1,0 +1,18 @@
+.medical-report
+{
+    .col-sm-5
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .xray-img
+        {
+            img
+            {
+                height: 350px;
+                width: 320px;
+                object-fit: contain;
+            }
+        }
+    }
+}

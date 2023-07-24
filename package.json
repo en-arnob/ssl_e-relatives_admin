@@ -1,0 +1,67 @@
+{
+  "name": "edmc",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ashvin27/react-datatable": "^1.5.3",
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-react": "^6.0.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "apexcharts": "^3.40.0",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3.0-alpha3",
+    "bootstrap-icons": "^1.10.5",
+    "datatables.net": "^1.13.4",
+    "html2canvas": "^1.4.1",
+    "jquery": "^3.7.0",
+    "jsbarcode": "^3.11.5",
+    "jwt-decode": "^3.1.2",
+    "konva": "^9.2.0",
+    "literallycanvas": "^0.5.2",
+    "literallycanvas-core": "^1.1.0",
+    "perfect-scrollbar": "^1.5.5",
+    "react": "^18.2.0",
+    "react-barcode": "^1.4.6",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-image-annotation": "^0.9.10",
+    "react-konva": "^18.2.10",
+    "react-paint": "^1.0.1",
+    "react-router-dom": "^6.11.2",
+    "react-scripts": "5.0.1",
+    "react-select": "^5.7.3",
+    "react-to-print": "^2.14.13",
+    "react-webcam": "^7.1.1",
+    "sass": "^1.62.1",
+    "simplebar": "^6.2.5",
+    "use-image": "^1.1.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+td.action
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.input-group-text
+{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 5px!important;
+}
+
+.col-md-6.float-right.text-right
+{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.col
+{
+    text-align: right;
+}
+
+.form-check-input
+{
+    margin-top: 0em;
+}

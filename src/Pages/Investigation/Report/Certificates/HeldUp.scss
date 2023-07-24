@@ -1,0 +1,117 @@
+.medical-report {
+  .img {
+    img {
+      width: 140px;
+      height: 200px;
+      object-fit: contain;
+      border: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  span,
+  p {
+    margin: 4px auto;
+    font-size: 12px;
+  }
+
+  .medical {
+    .col {
+      .row {
+        text-align: left;
+        border: 1px solid #222;
+        padding: 5px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        p,
+        span {
+          display: flex;
+          align-items: center;
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+
+  .medical-second-row {
+    .col {
+      border-right: 2px solid rgb(150, 150, 150);
+      margin-right: 10px;
+      .row {
+        text-align: left;
+        padding: 5px;
+        margin-left: 5px;
+      }
+      span {
+        font-weight: 600;
+      }
+    }
+    .col:nth-child(5) {
+      border-right: 0;
+      margin-left: 10px;
+    }
+    .col:nth-child(3) {
+      border-right: 0;
+      border-right-width: 0px;
+    }
+    .line {
+      height: 100px;
+      border-right: 2px solid rgb(150, 150, 150);
+    }
+  }
+
+  .medical-third-row {
+    .col {
+      border-right: 2px solid rgb(150, 150, 150);
+      margin-right: 10px;
+      .row {
+        text-align: left;
+        padding: 5px;
+        margin-left: 5px;
+      }
+      span {
+        font-weight: 600;
+      }
+    }
+    .col:nth-child(4) {
+      border-right: 0;
+      margin-left: 0px;
+    }
+  }
+
+  .medical-fourth-row {
+    .col {
+      border-right: 2px solid rgb(150, 150, 150);
+      margin-right: 10px;
+      .row {
+        text-align: left;
+        padding: 5px;
+        margin-left: 5px;
+      }
+      span {
+        font-weight: 600;
+      }
+    }
+    .col:nth-child(4) {
+      border-right: 0;
+    }
+  }
+
+  .inputs {
+    .col {
+      margin: 0 auto;
+      text-align: left;
+    }
+  }
+
+  .button-group {
+    .col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+}

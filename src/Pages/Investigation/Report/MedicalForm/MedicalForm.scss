@@ -1,0 +1,28 @@
+.medical-form {
+  html,
+  body {
+    font-size: 12px !important;
+    padding: 20px !important;
+    width: 280mm;
+    height: 148mm;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+}
+@page {
+  size: A4;
+}
+@media print {
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+}

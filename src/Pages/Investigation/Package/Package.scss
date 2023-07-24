@@ -1,0 +1,19 @@
+.select2-dropdown {
+    z-index: 9999; /* Adjust the z-index value as needed for multiple select so it is not appearing behind the modal*/
+  }
+
+  label
+  {
+    text-align: left;
+  }
+
+  .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x) * -.5);
+    margin-left: calc(var(--bs-gutter-x) * -.5);
+}
+
