@@ -46,6 +46,7 @@ import DashboardLayout from "../components/Layout/DashboardLayout";
 import PrivateRouter from "./Private/PrivateRouter";
 import TermsConditions from "../Pages/UserManagement/TermsConditions/TermsConditions";
 import ServiceCategory from "../Pages/UserManagement/ServiceCategory/ServiceCategory";
+import ServiceList from "../Pages/UserManagement/ServiceCategory/ServiceCategory";
 
 const router = createBrowserRouter([
   {
@@ -213,6 +214,10 @@ const router = createBrowserRouter([
       {
         path: "user-management/service-category",
         element: <ServiceCategory />,
+      }, 
+      {
+        path: "user-management/service-list",
+        element: <ServiceList/>,
       },
       {
         path: "module",

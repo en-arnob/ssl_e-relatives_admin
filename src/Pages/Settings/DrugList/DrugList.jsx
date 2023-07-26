@@ -229,7 +229,7 @@ const DrugList = () => {
             <div
               className="modal fade"
               id={`editDrugModal-${record.id}`}
-              tabindex="-1"
+              tabIndex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
@@ -492,7 +492,7 @@ const DrugList = () => {
       <div
         className="modal fade"
         id={`createUserModal`}
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >

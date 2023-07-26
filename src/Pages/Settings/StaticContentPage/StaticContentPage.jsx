@@ -123,7 +123,7 @@ const StaticContentPage = () => {
                             className="single-select form-select"
                             required
                           >
-                            <option value={0}>Select a group</option>
+                            <option value={0}>Select a groupp</option>
                             {groupContent?.map((item) => (
                               <option value={item?.id} key={item?.id}>
                                 {item?.name}
@@ -305,6 +305,7 @@ const StaticContentPage = () => {
       info: form.info || data?.info,
       status: isChecked ? "1" : "0",
     };
+    console.log(form);
 
     axios
       .put(
