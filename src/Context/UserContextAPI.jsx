@@ -1,7 +1,7 @@
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-import React, { createContext, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import React, { createContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 // export UserContext for access--------
 export const UserContext = createContext();
@@ -22,7 +22,7 @@ const UserContextAPI = ({ children }) => {
         signinData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -77,7 +77,7 @@ const UserContextAPI = ({ children }) => {
         setCurrentUser(data?.userQuery);
         setPermissions(data?.permissions);
       } else {
-        toast.error('user not found');
+        toast.error("user not found");
       }
     } catch (error) {
       console.error(error);
@@ -100,9 +100,12 @@ const UserContextAPI = ({ children }) => {
       toast.error(error?.response?.data?.message);
     }
   };
+  const check = () => {
+    console.log("hello world");
+  };
 
   useEffect(() => {
-    let token = window.localStorage.getItem('jwtToken');
+    let token = window.localStorage.getItem("jwtToken");
 
     if (token) {
       let decoded = jwt_decode(token);
@@ -110,7 +113,7 @@ const UserContextAPI = ({ children }) => {
       fetchAPI(id);
       // console.log(decoded);
     } else {
-      console.log('No Token Found');
+      console.log("No Token Found");
     }
   }, []);
 
@@ -123,6 +126,7 @@ const UserContextAPI = ({ children }) => {
     loading,
     setLoading,
     methodSignin,
+    check,
   };
   return (
     <>
