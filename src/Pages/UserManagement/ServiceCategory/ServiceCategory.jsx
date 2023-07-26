@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { UserContext } from "../../../Context/UserContextAPI";
 
-const ServiceList = () => {
+const ServiceCategory = () => {
   const { accessPerm } = useContext(UserContext);
 
   const [services, setServices] = useState([]);
@@ -421,7 +421,7 @@ const ServiceList = () => {
 
   return (
     <>
-      {/* ServiceList Container */}
+      {/* ServiceCategory Container */}
       <>
         <div className="card">
           <div className="card-body">
@@ -573,4 +573,4 @@ const ServiceList = () => {
   );
 };
 
-export default ServiceList;
+export default ServiceCategory;
