@@ -16,6 +16,7 @@ const ServiceCategoryList = () => {
   const [isChecked, setIsChecked] = useState(true);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
   const [serviceGroupData, setServiceGroupData] = useState([]);
+  const [click, setClick] = useState(true);
 
   // constt  navigate = useNavigate();
   const handlerOnEditFormSubmit = (e) => {
@@ -23,6 +24,7 @@ const ServiceCategoryList = () => {
 
     const form = e.target;
     const roleID = parseInt(form.roleID.value);
+    const serviceCategoryID = parseInt(form.serviceCategoryID.value);
     const name = form.name.value;
     const info = form.info.value;
 
@@ -31,6 +33,7 @@ const ServiceCategoryList = () => {
 
     const serviceData = {
       roleID: roleID,
+      serviceCategoryID: serviceCategoryID,
       name: name,
       info: info,
       status: serviceStatus,
@@ -42,7 +45,7 @@ const ServiceCategoryList = () => {
 
   const methodUpdateService = async (serviceData) => {
     const res = await axios.put(
-      `${process.env.REACT_APP_API_BASE_URL}/service-category/${editModalData.id}`,
+      `${process.env.REACT_APP_API_BASE_URL}/service_category_list/${editModalData.id}`,
       serviceData,
       {
         headers: {
@@ -63,7 +66,7 @@ const ServiceCategoryList = () => {
 
   const handlerOnDelete = async () => {
     const res = await axios.delete(
-      `${process.env.REACT_APP_API_BASE_URL}/service-category/${deleteModalData.id}`
+      `${process.env.REACT_APP_API_BASE_URL}/service_category_list/${deleteModalData.id}`
     );
     // console.log(res);
     if (res.status === 200) {
@@ -118,17 +121,20 @@ const ServiceCategoryList = () => {
   };
 
   useEffect(() => {
+    // start get methode to show service category details in table
     const fetchServicesAPI = async () => {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/service-category`
+        `${process.env.REACT_APP_API_BASE_URL}/service_category_list`
       );
       const data = response.data.data;
-      //   console.log(data);
+      // console.log(data);
       setServices(data);
       setRefresh(refresh);
     };
     fetchServicesAPI();
+    // end get methode to show service category details in table
 
+    // Start get methode to show role name in dropdown
     const fetchServicesGroupAPI = async () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/roles`
@@ -139,20 +145,28 @@ const ServiceCategoryList = () => {
       setRefresh(refresh);
     };
     fetchServicesGroupAPI();
+    // End get methode to show role name in dropdown
 
-    //serviceGroupData
+    //start get mehode to show service category list name in dropdown using role_id after selecting role
     const fetchCategoryGroupAPI = async () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/service-category/findbyrole/${selectedRoleId}`
       );
       const data = response.data.data;
-      console.log(data);
+      console.log(data[0].name);
       setServiceGroupData(data);
-      setRefresh(refresh);
+      setRefresh(!refresh);
     };
-    fetchCategoryGroupAPI();
-    console.log(selectedRoleId);
-  }, [refresh, selectedRoleId]);
+
+    // Call the fetchCategoryGroupAPI whenever selectedRoleId changes.
+    if (selectedRoleId !== null) {
+      fetchCategoryGroupAPI();
+    }
+
+    //End get mehode to show service category list name in dropdown using role_id after selecting role
+    // console.log(selectedRoleId);
+    // console.log(click);
+  }, [refresh, selectedRoleId, click]);
 
   const columns = [
     {
@@ -172,6 +186,15 @@ const ServiceCategoryList = () => {
       sortable: true,
       cell: (record) => {
         return <>{record?.role?.name}</>;
+      },
+    },
+    {
+      key: "service_category",
+      text: "Service Category",
+      className: "group",
+      sortable: true,
+      cell: (record) => {
+        return <>{record?.service_category?.name}</>;
       },
     },
     {
@@ -197,6 +220,7 @@ const ServiceCategoryList = () => {
       align: "left",
       sortable: false,
       cell: (record) => {
+        // console.log(record);
         const filterServiceGroups = serviceGroups.filter(
           (filterServicesGroup) => {
             return filterServicesGroup.id !== record?.role_id;
@@ -210,7 +234,9 @@ const ServiceCategoryList = () => {
             {accessPerm(12, 2) && (
               <button
                 type="button"
-                onClick={() => {
+                onClick={(e) => {
+                  setSelectedRoleId(record?.role_id);
+                  setClick(!click);
                   setEditModalData(record);
                   if (record.status === 1) {
                     setIsChecked(true);
@@ -266,7 +292,7 @@ const ServiceCategoryList = () => {
                   <form onSubmit={(e) => handlerOnEditFormSubmit(e)}>
                     <div className="modal-body ">
                       <div className="row mb-3">
-                        <label className="col-sm-3 col-form-label" required>
+                        <label className="col-sm-3 col-form-label">
                           Role <span className="text-danger">*</span>
                         </label>
                         <div className="col-sm-9">
@@ -274,18 +300,45 @@ const ServiceCategoryList = () => {
                             className="form-select"
                             name="roleID"
                             aria-label="Default select example"
-                            // required
+                            // value={selectedRoleId || ""}
+                            onChange={(e) => {
+                              setSelectedRoleId(parseInt(e.target.value));
+                            }}
+                            required
                           >
                             <option value={record?.role_id}>
                               {record?.role?.name}
                             </option>
-
-                            {filterServiceGroups?.map((singleServiceGroup) => (
+                            {filterServiceGroups?.map((roleID) => (
                               <option
-                                key={singleServiceGroup.id}
-                                value={parseInt(singleServiceGroup?.id)}
+                                key={roleID?.id}
+                                value={parseInt(roleID?.id)}
                               >
-                                {singleServiceGroup?.name}
+                                {roleID?.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="row mb-3">
+                        <label className="col-sm-3 col-form-label">
+                          Service Category List{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div className="col-sm-9">
+                          <select
+                            className="form-select"
+                            name="serviceCategoryID"
+                            aria-label="Default select example"
+                            required
+                          >
+                            <option value={record?.service_category_id}>
+                              {record?.service_category?.name}
+                            </option>
+
+                            {serviceGroupData?.map((service, index) => (
+                              <option key={index} value={parseInt(service?.id)}>
+                                {service?.name}
                               </option>
                             ))}
                           </select>
@@ -447,7 +500,7 @@ const ServiceCategoryList = () => {
           <div className="card-body">
             <div className="border p-3 rounded">
               <div className="card-box">
-                <h6 className="mb-0 text-uppercase">Service List</h6>
+                <h6 className="mb-0 text-uppercase">Service Category List</h6>
                 <div className="col">
                   {/* Create Service trigger modal Button */}
                   {accessPerm(12, 1) && (
@@ -511,7 +564,7 @@ const ServiceCategoryList = () => {
                       className="form-select"
                       name="roleID"
                       aria-label="Default select example"
-                      value={selectedRoleId || ""}
+                      value={selectedRoleId}
                       onChange={(e) => {
                         setSelectedRoleId(parseInt(e.target.value));
                       }}
@@ -536,9 +589,9 @@ const ServiceCategoryList = () => {
                       className="form-select"
                       name="serviceCategoryID"
                       aria-label="Default select example"
-                    //   onChange={(e) => {
-                    //     setSelectedRoleId(parseInt(e.target.value));
-                    //   }}
+                      //   onChange={(e) => {
+                      //     setSelectedRoleId(parseInt(e.target.value));
+                      //   }}
                       required
                     >
                       {serviceGroupData?.map((service, index) => (

@@ -9,7 +9,7 @@ const ServiceCategory = () => {
   const { accessPerm } = useContext(UserContext);
 
   const [services, setServices] = useState([]);
-  const [serviceGroups,setServiceGroups] = useState([]);
+  const [serviceGroups, setServiceGroups] = useState([]);
   const [editModalData, setEditModalData] = useState({});
   const [deleteModalData, setDeleteModalData] = useState({});
   const [refresh, setRefresh] = useState(false);
@@ -113,6 +113,7 @@ const ServiceCategory = () => {
   };
 
   useEffect(() => {
+    //start get methode to show in table
     const fetchServicesAPI = async () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/service-category`
@@ -123,7 +124,8 @@ const ServiceCategory = () => {
       setRefresh(refresh);
     };
     fetchServicesAPI();
-
+    // end get methode
+    // start get methode to show roll name in dropdown
     const fetchServicesGroupAPI = async () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/roles`
@@ -134,6 +136,7 @@ const ServiceCategory = () => {
       setRefresh(refresh);
     };
     fetchServicesGroupAPI();
+    // end get methode to show roll name in dropdown
   }, [refresh]);
 
   const columns = [
@@ -179,9 +182,11 @@ const ServiceCategory = () => {
       align: "left",
       sortable: false,
       cell: (record) => {
-        const filterServiceGroups = serviceGroups.filter((filterServicesGroup) => {
-          return filterServicesGroup.id !== record?.role_id;
-        });
+        const filterServiceGroups = serviceGroups.filter(
+          (filterServicesGroup) => {
+            return filterServicesGroup.id !== record?.role_id;
+          }
+        );
 
         // console.log(filterRoles);
         return (

@@ -46,7 +46,7 @@ import DashboardLayout from "../components/Layout/DashboardLayout";
 import PrivateRouter from "./Private/PrivateRouter";
 import TermsConditions from "../Pages/UserManagement/TermsConditions/TermsConditions";
 import ServiceCategory from "../Pages/UserManagement/ServiceCategory/ServiceCategory";
-import ServiceCategoryList from "../Pages/UserManagement/ServiceList/ServiceList";
+import ServiceCategoryList from "../Pages/UserManagement/ServiceCategoryList/ServiceCategoryList";
 
 const router = createBrowserRouter([
   {
