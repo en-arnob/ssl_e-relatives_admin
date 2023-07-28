@@ -5,43 +5,48 @@ import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { UserContext } from "../../../Context/UserContextAPI";
 
-const DrugList = () => {
-  const { currentUser, accessPerm, loading } = useContext(UserContext);
+const ServiceCategoryList = () => {
+  const { accessPerm } = useContext(UserContext);
 
-  const [drugs, setDrugs] = useState([]);
-  const [drugGroups, setDrugGroups] = useState([]);
+  const [services, setServices] = useState([]);
+  const [serviceGroups, setServiceGroups] = useState([]);
   const [editModalData, setEditModalData] = useState({});
   const [deleteModalData, setDeleteModalData] = useState({});
   const [refresh, setRefresh] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
+  const [selectedRoleId, setSelectedRoleId] = useState(null);
+  const [serviceGroupData, setServiceGroupData] = useState([]);
+  const [click, setClick] = useState(true);
 
-  // const navigate = useNavigate();
+  // constt  navigate = useNavigate();
   const handlerOnEditFormSubmit = (e) => {
     e.preventDefault();
 
     const form = e.target;
-    const drugGroup = parseInt(form.drugGroup.value);
+    const roleID = parseInt(form.roleID.value);
+    const serviceCategoryID = parseInt(form.serviceCategoryID.value);
     const name = form.name.value;
     const info = form.info.value;
 
     const status = form.status.value;
-    const drugStatus = status === "true" ? 1 : 0;
+    const serviceStatus = status === "true" ? 1 : 0;
 
-    const drugsData = {
-      drugGroup: drugGroup,
+    const serviceData = {
+      roleID: roleID,
+      serviceCategoryID: serviceCategoryID,
       name: name,
       info: info,
-      status: drugStatus,
+      status: serviceStatus,
     };
-    console.log(drugsData);
+    console.log(serviceData);
 
-    methodUpdateDrug(drugsData);
+    methodUpdateService(serviceData);
   };
 
-  const methodUpdateDrug = async (drugsData) => {
+  const methodUpdateService = async (serviceData) => {
     const res = await axios.put(
-      `${process.env.REACT_APP_API_BASE_URL}/drugs/drug/${editModalData.id}`,
-      drugsData,
+      `${process.env.REACT_APP_API_BASE_URL}/service_category_list/${editModalData.id}`,
+      serviceData,
       {
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +56,7 @@ const DrugList = () => {
 
     console.log(res);
     if (res.status === 200 && res?.data?.status === "success") {
-      toast.success("Drug Updated successfully!!");
+      toast.success("Updated successfully!!");
       setRefresh(!refresh);
     } else {
       toast.error(res?.data?.message);
@@ -61,11 +66,11 @@ const DrugList = () => {
 
   const handlerOnDelete = async () => {
     const res = await axios.delete(
-      `${process.env.REACT_APP_API_BASE_URL}/drugs/drug/${deleteModalData.id}`
+      `${process.env.REACT_APP_API_BASE_URL}/service_category_list/${deleteModalData.id}`
     );
     // console.log(res);
     if (res.status === 200) {
-      toast.success("Drug Deleted successfully!!");
+      toast.success("Deleted successfully!!");
       setRefresh(!refresh);
     }
   };
@@ -74,27 +79,30 @@ const DrugList = () => {
     e.preventDefault();
 
     const form = e.target;
-    const drugGroup = parseInt(form.drugGroup.value);
+    const roleID = parseInt(form.roleID.value);
+    const serviceCategoryID = parseInt(form.serviceCategoryID.value);
     const name = form.name.value;
     const info = form.info.value;
 
     const status = form.status.value;
-    const drugStatus = status === "true" ? 1 : 0;
+    const serviceStatus = status === "true" ? 1 : 0;
 
-    const drugsData = {
-      drugGroup: drugGroup,
+    const serviceData = {
+      roleID: roleID,
+      serviceCategoryID: serviceCategoryID,
       name: name,
       info: info,
-      status: drugStatus,
+      status: serviceStatus,
     };
-    console.log(drugsData);
+    console.log(serviceData);
 
-    methodCreateDrug(drugsData, form);
+    methodCreateService(serviceData, form);
   };
 
-  const methodCreateDrug = async (usersData, form) => {
+  const methodCreateService = async (usersData, form) => {
+    console.log(usersData);
     const res = await axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/drugs/create-drug`,
+      `${process.env.REACT_APP_API_BASE_URL}/service_category_list`,
       usersData,
       {
         headers: {
@@ -106,38 +114,59 @@ const DrugList = () => {
     console.log(res);
 
     if (res.status === 201) {
-      toast.success("Drug Created successfully!!");
+      toast.success("Service Category List Created successfully!!");
       setRefresh(!refresh);
       form.reset();
     }
   };
 
   useEffect(() => {
-    const fetchDrugsAPI = async () => {
+    // start get methode to show service category details in table
+    const fetchServicesAPI = async () => {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/drugs/all-drugs`
+        `${process.env.REACT_APP_API_BASE_URL}/service_category_list`
       );
       const data = response.data.data;
       // console.log(data);
-      setDrugs(data);
+      setServices(data);
       setRefresh(refresh);
     };
-    fetchDrugsAPI();
+    fetchServicesAPI();
+    // end get methode to show service category details in table
 
-    const fetchDrugsGroupAPI = async () => {
+    // Start get methode to show role name in dropdown
+    const fetchServicesGroupAPI = async () => {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/drug-groups/all-groups`
+        `${process.env.REACT_APP_API_BASE_URL}/roles`
       );
       const data = response.data.data;
       // console.log(data);
-      setDrugGroups(data);
+      setServiceGroups(data);
       setRefresh(refresh);
     };
-    fetchDrugsGroupAPI();
-  }, [refresh]);
+    fetchServicesGroupAPI();
+    // End get methode to show role name in dropdown
 
-  console.log(drugs);
-  console.log(drugGroups);
+    //start get mehode to show service category list name in dropdown using role_id after selecting role
+    const fetchCategoryGroupAPI = async () => {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/service-category/findbyrole/${selectedRoleId}`
+      );
+      const data = response.data.data;
+      console.log(data[0].name);
+      setServiceGroupData(data);
+      setRefresh(!refresh);
+    };
+
+    // Call the fetchCategoryGroupAPI whenever selectedRoleId changes.
+    if (selectedRoleId !== null) {
+      fetchCategoryGroupAPI();
+    }
+
+    //End get mehode to show service category list name in dropdown using role_id after selecting role
+    // console.log(selectedRoleId);
+    // console.log(click);
+  }, [refresh, selectedRoleId, click]);
 
   const columns = [
     {
@@ -151,12 +180,21 @@ const DrugList = () => {
       },
     },
     {
-      key: "drug_group_id",
-      text: "Group",
+      key: "role_id",
+      text: "Role Name",
       className: "group",
       sortable: true,
       cell: (record) => {
-        return <>{record?.drug_group?.name}</>;
+        return <>{record?.role?.name}</>;
+      },
+    },
+    {
+      key: "service_category",
+      text: "Service Category",
+      className: "group",
+      sortable: true,
+      cell: (record) => {
+        return <>{record?.service_category?.name}</>;
       },
     },
     {
@@ -182,18 +220,23 @@ const DrugList = () => {
       align: "left",
       sortable: false,
       cell: (record) => {
-        const filterDrugGroups = drugGroups.filter((filterDrugGroup) => {
-          return filterDrugGroup.id !== record?.drug_group_id;
-        });
+        // console.log(record);
+        const filterServiceGroups = serviceGroups.filter(
+          (filterServicesGroup) => {
+            return filterServicesGroup.id !== record?.role_id;
+          }
+        );
 
         // console.log(filterRoles);
         return (
           <>
-            {/* Edit Drug Trigger Button */}
+            {/* Edit Service Trigger Button */}
             {accessPerm(12, 2) && (
               <button
                 type="button"
-                onClick={() => {
+                onClick={(e) => {
+                  setSelectedRoleId(record?.role_id);
+                  setClick(!click);
                   setEditModalData(record);
                   if (record.status === 1) {
                     setIsChecked(true);
@@ -203,21 +246,21 @@ const DrugList = () => {
                 }}
                 className="btn btn-primary btn-sm"
                 data-bs-toggle="modal"
-                data-bs-target={`#editDrugModal-${record.id}`}
+                data-bs-target={`#editServiceModal-${record.id}`}
                 style={{ marginRight: "5px" }}
               >
                 <i className="fa fa-edit"></i>
               </button>
             )}
 
-            {/* Delete Drug Trigger Button */}
+            {/* Delete Service Trigger Button */}
             {accessPerm(12, 3) && (
               <button
                 type="button"
                 onClick={() => setDeleteModalData(record)}
                 className="btn btn-danger btn-sm"
                 data-bs-toggle="modal"
-                data-bs-target={`#deleteDrugModal-${record.id}`}
+                data-bs-target={`#deleteServiceModal-${record.id}`}
                 style={{ marginRight: "5px" }}
               >
                 <i className="fa fa-trash"></i>
@@ -228,7 +271,7 @@ const DrugList = () => {
 
             <div
               className="modal fade"
-              id={`editDrugModal-${record.id}`}
+              id={`editServiceModal-${record.id}`}
               tabIndex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
@@ -237,7 +280,7 @@ const DrugList = () => {
                 <div className="modal-content modal-dialog-scrollable">
                   <div className="modal-header">
                     <h5 className="modal-title" id="exampleModalLabel">
-                      Edit Drug
+                      Edit Services
                     </h5>
                     <button
                       type="button"
@@ -250,25 +293,52 @@ const DrugList = () => {
                     <div className="modal-body ">
                       <div className="row mb-3">
                         <label className="col-sm-3 col-form-label">
-                          Group <span className="text-danger">*</span>
+                          Role <span className="text-danger">*</span>
                         </label>
                         <div className="col-sm-9">
                           <select
                             className="form-select"
-                            name="drugGroup"
+                            name="roleID"
                             aria-label="Default select example"
-                            // required
+                            // value={selectedRoleId || ""}
+                            onChange={(e) => {
+                              setSelectedRoleId(parseInt(e.target.value));
+                            }}
+                            required
                           >
-                            <option value={record?.drug_group_id} selected>
-                              {record?.drug_group?.name}
+                            <option value={record?.role_id}>
+                              {record?.role?.name}
+                            </option>
+                            {filterServiceGroups?.map((roleID) => (
+                              <option
+                                key={roleID?.id}
+                                value={parseInt(roleID?.id)}
+                              >
+                                {roleID?.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="row mb-3">
+                        <label className="col-sm-3 col-form-label">
+                          Service Category List{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div className="col-sm-9">
+                          <select
+                            className="form-select"
+                            name="serviceCategoryID"
+                            aria-label="Default select example"
+                            required
+                          >
+                            <option value={record?.service_category_id}>
+                              {record?.service_category?.name}
                             </option>
 
-                            {filterDrugGroups?.map((singleDrugGroup) => (
-                              <option
-                                key={singleDrugGroup.id}
-                                value={parseInt(singleDrugGroup?.id)}
-                              >
-                                {singleDrugGroup?.name}
+                            {serviceGroupData?.map((service, index) => (
+                              <option key={index} value={parseInt(service?.id)}>
+                                {service?.name}
                               </option>
                             ))}
                           </select>
@@ -296,7 +366,7 @@ const DrugList = () => {
                             defaultValue={record?.info}
                             className="form-control w-100"
                             rows="3"
-                            maxlength="200"
+                            maxLength="200"
                           ></textarea>
                         </div>
                       </div>
@@ -357,7 +427,7 @@ const DrugList = () => {
 
             <div
               className="modal fade"
-              id={`deleteDrugModal-${record.id}`}
+              id={`deleteServiceModal-${record.id}`}
               tabIndex={-1}
               style={{ display: "none" }}
               aria-hidden="true"
@@ -365,7 +435,7 @@ const DrugList = () => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title">Delete Drug</h5>
+                    <h5 className="modal-title">Delete Service</h5>
                     <button
                       type="button"
                       className="btn-close"
@@ -412,7 +482,7 @@ const DrugList = () => {
     show_length_menu: true,
     show_pagination: true,
     pagination: "advance",
-    length_menu: [10, 50, 100],
+    length_menu: [10, 20, 50, 100],
     button: {
       excel: true,
       print: true,
@@ -420,51 +490,25 @@ const DrugList = () => {
     },
   };
 
-  const extraButtons = [
-    // {
-    //     className:"btn btn-primary buttons-pdf",
-    //     title:"Export TEst",
-    //     children:[
-    //         <span>
-    //         <FaRegFilePdf/>
-    //         </span>
-    //     ],
-    //     onClick:(event)=>{
-    //         console.log(event);
-    //     },
-    // },
-    // {
-    //     className:"btn btn-primary buttons-pdf",
-    //     title:"Export TEst",
-    //     children:[
-    //         <span>
-    //         <i className="glyphicon glyphicon-print fa fa-print" aria-hidden="true"></i>
-    //         </span>
-    //     ],
-    //     onClick:(event)=>{
-    //         console.log(event);
-    //     },
-    //     onDoubleClick:(event)=>{
-    //         console.log("doubleClick")
-    //     }
-    // }
-  ];
+  const extraButtons = [];
 
   return (
     <>
-      {/* DrugList Container */}
+      {/* ServiceList Container */}
       <>
         <div className="card">
           <div className="card-body">
             <div className="border p-3 rounded">
               <div className="card-box">
-                <h6 className="mb-0 text-uppercase">Drugs List</h6>
+                <h6 className="mb-0 text-uppercase">Service Category List</h6>
                 <div className="col">
-                  {/* Create Drug trigger modal Button */}
+                  {/* Create Service trigger modal Button */}
                   {accessPerm(12, 1) && (
                     <button
                       type="button"
-                      onClick={() => setIsChecked(true)}
+                      onClick={() =>
+                        setIsChecked((prevIsChecked) => !prevIsChecked)
+                      }
                       className="btn btn-primary"
                       data-bs-toggle="modal"
                       data-bs-target="#createUserModal"
@@ -479,7 +523,7 @@ const DrugList = () => {
 
               <ReactDatatable
                 config={config}
-                records={drugs}
+                records={services}
                 columns={columns}
                 extraButtons={extraButtons}
               />
@@ -488,11 +532,11 @@ const DrugList = () => {
         </div>
       </>
 
-      {/* Create Drug Modal Body */}
+      {/* Create Service Modal Body */}
       <div
         className="modal fade"
         id={`createUserModal`}
-        tabIndex="-1"
+        tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
@@ -500,7 +544,7 @@ const DrugList = () => {
           <div className="modal-content  modal-dialog-scrollable ">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Create Drug
+                Create Service List
               </h5>
               <button
                 type="button"
@@ -513,26 +557,52 @@ const DrugList = () => {
               <div className="modal-body ">
                 <div className="row mb-3">
                   <label className="col-sm-3 col-form-label">
-                    Group <span className="text-danger">*</span>
+                    Role <span className="text-danger">*</span>
                   </label>
                   <div className="col-sm-9">
                     <select
                       className="form-select"
-                      name="drugGroup"
+                      name="roleID"
                       aria-label="Default select example"
+                      value={selectedRoleId}
+                      onChange={(e) => {
+                        setSelectedRoleId(parseInt(e.target.value));
+                      }}
                       required
                     >
-                      {drugGroups?.map((drugGroup) => (
-                        <option
-                          key={drugGroup.id}
-                          value={parseInt(drugGroup?.id)}
-                        >
-                          {drugGroup?.name}
+                      <option value="">Select One</option>
+
+                      {serviceGroups?.map((roleID) => (
+                        <option key={roleID?.id} value={parseInt(roleID?.id)}>
+                          {roleID?.name}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
+                <div className="row mb-3">
+                  <label className="col-sm-3 col-form-label">
+                    Service Category List <span className="text-danger">*</span>
+                  </label>
+                  <div className="col-sm-9">
+                    <select
+                      className="form-select"
+                      name="serviceCategoryID"
+                      aria-label="Default select example"
+                      //   onChange={(e) => {
+                      //     setSelectedRoleId(parseInt(e.target.value));
+                      //   }}
+                      required
+                    >
+                      {serviceGroupData?.map((service, index) => (
+                        <option key={index} value={parseInt(service?.id)}>
+                          {service?.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
                 <div className="row mb-3 d-flex align-items-center">
                   <label className="col-sm-3 col-form-label">
                     Name <span className="text-danger"> *</span>
@@ -553,7 +623,7 @@ const DrugList = () => {
                       name="info"
                       className="form-control w-100"
                       rows="3"
-                      maxlength="200"
+                      maxLength="200"
                     ></textarea>
                   </div>
                 </div>
@@ -589,7 +659,11 @@ const DrugList = () => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
                   Save changes
                 </button>
               </div>
@@ -601,4 +675,4 @@ const DrugList = () => {
   );
 };
 
-export default DrugList;
+export default ServiceCategoryList;

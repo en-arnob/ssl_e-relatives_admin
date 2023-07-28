@@ -262,6 +262,14 @@ const DashboardLayout = () => {
                     </Link>
                   </li>
                 )}
+                
+                  <li>
+                    <Link to="/dashboard/user-management/service-category-list">
+                      <i className="bi bi-arrow-right-short" />
+                      Service List
+                    </Link>
+                  </li>
+                
               </MenuItem>
             )}
 
