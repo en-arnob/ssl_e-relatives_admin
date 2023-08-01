@@ -17,6 +17,7 @@ const ServiceCategoryList = () => {
   const [selectedRoleId, setSelectedRoleId] = useState(null);
   const [serviceGroupData, setServiceGroupData] = useState([]);
   const [click, setClick] = useState(true);
+  const [defaultRole, setDefaultRole] = useState(true);
 
   // constt  navigate = useNavigate();
   const handlerOnEditFormSubmit = (e) => {
@@ -55,7 +56,9 @@ const ServiceCategoryList = () => {
     );
 
     console.log(res);
+
     if (res.status === 200 && res?.data?.status === "success") {
+      setDefaultRole(true)
       toast.success("Updated successfully!!");
       setRefresh(!refresh);
     } else {
@@ -153,7 +156,7 @@ const ServiceCategoryList = () => {
         `${process.env.REACT_APP_API_BASE_URL}/service-category/findbyrole/${selectedRoleId}`
       );
       const data = response.data.data;
-      console.log(data[0].name);
+      // console.log(data);
       setServiceGroupData(data);
       setRefresh(!refresh);
     };
@@ -164,8 +167,7 @@ const ServiceCategoryList = () => {
     }
 
     //End get mehode to show service category list name in dropdown using role_id after selecting role
-    // console.log(selectedRoleId);
-    // console.log(click);
+
   }, [refresh, selectedRoleId, click]);
 
   const columns = [
@@ -220,12 +222,16 @@ const ServiceCategoryList = () => {
       align: "left",
       sortable: false,
       cell: (record) => {
+        // console.log(serviceGroups);
         // console.log(record);
         const filterServiceGroups = serviceGroups.filter(
           (filterServicesGroup) => {
             return filterServicesGroup.id !== record?.role_id;
           }
         );
+        const filterServiceGroupData=serviceGroupData.filter(value=>{
+          return value.id!==record?.service_category_id;
+        })
 
         // console.log(filterRoles);
         return (
@@ -302,7 +308,9 @@ const ServiceCategoryList = () => {
                             aria-label="Default select example"
                             // value={selectedRoleId || ""}
                             onChange={(e) => {
+                              setDefaultRole(false);
                               setSelectedRoleId(parseInt(e.target.value));
+                        
                             }}
                             required
                           >
@@ -326,17 +334,23 @@ const ServiceCategoryList = () => {
                           <span className="text-danger">*</span>
                         </label>
                         <div className="col-sm-9">
+                          
                           <select
                             className="form-select"
                             name="serviceCategoryID"
                             aria-label="Default select example"
                             required
+                            
                           >
-                            <option value={record?.service_category_id}>
-                              {record?.service_category?.name}
-                            </option>
+                            {defaultRole && (
+                              <>
+                                <option value={record?.service_category_id}>
+                                  {record?.service_category?.name}
+                                </option>
+                              </>
+                            )}
 
-                            {serviceGroupData?.map((service, index) => (
+                            {filterServiceGroupData?.map((service, index) => (
                               <option key={index} value={parseInt(service?.id)}>
                                 {service?.name}
                               </option>
@@ -557,7 +571,7 @@ const ServiceCategoryList = () => {
               <div className="modal-body ">
                 <div className="row mb-3">
                   <label className="col-sm-3 col-form-label">
-                    Role <span className="text-danger">*</span>
+                    Rolee <span className="text-danger">*</span>
                   </label>
                   <div className="col-sm-9">
                     <select
