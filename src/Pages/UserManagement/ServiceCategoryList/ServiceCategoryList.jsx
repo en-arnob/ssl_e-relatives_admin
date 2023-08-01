@@ -153,7 +153,6 @@ const ServiceCategoryList = () => {
         `${process.env.REACT_APP_API_BASE_URL}/service-category/findbyrole/${selectedRoleId}`
       );
       const data = response.data.data;
-      console.log(data[0].name);
       setServiceGroupData(data);
       setRefresh(!refresh);
     };
