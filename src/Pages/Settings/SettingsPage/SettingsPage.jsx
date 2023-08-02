@@ -192,6 +192,25 @@ const SettingsPage = () => {
                   </div>
                   <div className="row mb-3">
                     <label
+                      htmlFor="inputEmail"
+                      className="col-sm-3 col-form-label"
+                    >
+                      Email
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="text"
+                        onChange={handleChange}
+                        value={data?.email}
+                        name="email"
+                        className="form-control"
+                        id="inputEmail"
+                        placeholder={data?.email}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <label
                       htmlFor="inputAddress4"
                       className="col-sm-3 col-form-label"
                     >

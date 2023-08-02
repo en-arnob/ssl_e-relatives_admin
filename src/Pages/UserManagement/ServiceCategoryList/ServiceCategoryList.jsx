@@ -58,7 +58,7 @@ const ServiceCategoryList = () => {
     console.log(res);
 
     if (res.status === 200 && res?.data?.status === "success") {
-      setDefaultRole(true)
+      setDefaultRole(true);
       toast.success("Updated successfully!!");
       setRefresh(!refresh);
     } else {
@@ -167,7 +167,6 @@ const ServiceCategoryList = () => {
     }
 
     //End get mehode to show service category list name in dropdown using role_id after selecting role
-
   }, [refresh, selectedRoleId, click]);
 
   const columns = [
@@ -229,9 +228,9 @@ const ServiceCategoryList = () => {
             return filterServicesGroup.id !== record?.role_id;
           }
         );
-        const filterServiceGroupData=serviceGroupData.filter(value=>{
-          return value.id!==record?.service_category_id;
-        })
+        const filterServiceGroupData = serviceGroupData.filter((value) => {
+          return value.id !== record?.service_category_id;
+        });
 
         // console.log(filterRoles);
         return (
@@ -310,7 +309,6 @@ const ServiceCategoryList = () => {
                             onChange={(e) => {
                               setDefaultRole(false);
                               setSelectedRoleId(parseInt(e.target.value));
-                        
                             }}
                             required
                           >
@@ -334,13 +332,11 @@ const ServiceCategoryList = () => {
                           <span className="text-danger">*</span>
                         </label>
                         <div className="col-sm-9">
-                          
                           <select
                             className="form-select"
                             name="serviceCategoryID"
                             aria-label="Default select example"
                             required
-                            
                           >
                             {defaultRole && (
                               <>
