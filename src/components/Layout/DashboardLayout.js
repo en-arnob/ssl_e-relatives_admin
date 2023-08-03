@@ -73,15 +73,14 @@ const DashboardLayout = () => {
           <Link to="/dashboard">
             <div onClick={handleToggleSidebar} className="sidebar-header">
               <div>
-                {data?.logo_image ? (
-                  <img
-                    src={`${process.env.REACT_APP_UPLOAD_URL}/${data?.logo_image}`}
-                    className="logo-icon"
-                    alt="logo icon"
-                  />
-                ) : (
-                  `${data?.website_name}`
-                )}
+                {data?.logo_image
+                  ? // <img
+                    //   src={`${process.env.REACT_APP_UPLOAD_URL}/${data?.logo_image}`}
+                    //   className="logo-icon"
+                    //   alt="logo icon"
+                    // />
+                    `${data?.website_name}`
+                  : `${data?.website_name}`}
               </div>
               <div className="toggle-icon ms-auto">
                 <i className="bi bi-chevron-double-left" />
@@ -191,14 +190,14 @@ const DashboardLayout = () => {
               </MenuItem>
             )}
 
-            <MenuItem iconClass="bi bi-filter-square" title="Reports">
+            {/* <MenuItem iconClass="bi bi-filter-square" title="Reports">
               <li>
                 <Link to="/dashboard/settings/system-settings">
                   <i className="bi bi-arrow-right-short" />
                   Birthday Report
                 </Link>
               </li>
-            </MenuItem>
+            </MenuItem> */}
             {(accessPerm(5, 4) ||
               accessPerm(4, 4) ||
               accessPerm(2, 4) ||
@@ -262,14 +261,27 @@ const DashboardLayout = () => {
                     </Link>
                   </li>
                 )}
-                
-                  <li>
-                    <Link to="/dashboard/user-management/service-category-list">
-                      <i className="bi bi-arrow-right-short" />
-                      Service List
-                    </Link>
-                  </li>
-                
+
+                <li>
+                  <Link to="/dashboard/user-management/service-category-list">
+                    <i className="bi bi-arrow-right-short" />
+                    Service List
+                  </Link>
+                </li>
+              </MenuItem>
+            )}
+            {(accessPerm(5, 4) ||
+              accessPerm(4, 4) ||
+              accessPerm(2, 4) ||
+              accessPerm(3, 4) ||
+              accessPerm(3, 4)) && (
+              <MenuItem iconClass="bi bi-people" title="Services">
+                <li>
+                  <Link to="/dashboard/services/contact-messages">
+                    <i className="bi bi-arrow-right-short" />
+                    Contact Messages
+                  </Link>
+                </li>
               </MenuItem>
             )}
 
