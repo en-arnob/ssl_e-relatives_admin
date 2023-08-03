@@ -47,6 +47,7 @@ import PrivateRouter from "./Private/PrivateRouter";
 import TermsConditions from "../Pages/UserManagement/TermsConditions/TermsConditions";
 import ServiceCategory from "../Pages/UserManagement/ServiceCategory/ServiceCategory";
 import ServiceCategoryList from "../Pages/UserManagement/ServiceCategoryList/ServiceCategoryList";
+import ContactMessages from "../Pages/Services/ContactMessages/ContactMessages";
 
 const router = createBrowserRouter([
   {
@@ -217,8 +218,9 @@ const router = createBrowserRouter([
       },
       {
         path: "user-management/service-category-list",
-        element: <ServiceCategoryList/>,
+        element: <ServiceCategoryList />,
       },
+      { path: "services/contact-messages", element: <ContactMessages /> },
       {
         path: "module",
         // element: <ModuleListPage />,
