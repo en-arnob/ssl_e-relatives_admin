@@ -74,11 +74,13 @@ const DashboardLayout = () => {
             <div onClick={handleToggleSidebar} className="sidebar-header">
               <div>
                 {data?.logo_image
-                  ? // <img
-                    //   src={`${process.env.REACT_APP_UPLOAD_URL}/${data?.logo_image}`}
-                    //   className="logo-icon"
-                    //   alt="logo icon"
-                    // />
+                  ? // (
+                    //     <img
+                    //       src={`${process.env.REACT_APP_UPLOAD_URL}/${data?.logo_image}`}
+                    //       className="logo-icon"
+                    //       alt="logo icon"
+                    //     />
+                    //   )
                     `${data?.website_name}`
                   : `${data?.website_name}`}
               </div>

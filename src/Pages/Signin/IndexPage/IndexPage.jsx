@@ -41,9 +41,15 @@ const IndexPage = () => {
                 <div className="col col-xl-5 card-container">
                   <div className="card-body p-6">
                     <div className="p-2">
-                      <div className="w-full">
-                        <img src="./edmc-logo.jpeg" alt="" />
-                      </div>
+                      {data?.logo_image && (
+                        <div className="w-full">
+                          <img
+                            src={`${process.env.REACT_APP_UPLOAD_URL}/${data?.logo_image}`}
+                            alt=""
+                          />
+                        </div>
+                      )}
+
                       <h2 className="mt-2">{data?.website_name}</h2>
                       <p className="mt-2">{data?.address}</p>
                       <p className="contact">{data?.mobile}</p>
@@ -54,31 +60,22 @@ const IndexPage = () => {
                         to="/signin"
                         className="text-white text-underline-none"
                       >
-                        <button className="btn btn-primary btn-lg px-md-5 radius-30" style={{width:'11rem'}}>
-                          Login
+                        <button
+                          className="btn btn-primary btn-lg px-md-5 radius-30"
+                          style={{ width: "15rem" }}
+                        >
+                          Admin Login
                         </button>
-                      </Link>
-                      <Link
-                        to="/signup"
-                        className="text-white text-underline-none"
-                      >
-                        <button className="btn btn-success text-white btn-lg ms-3 px-md-4 radius-30" style={{width:'11rem'}}>
-                          Registration
-                        </button>
-                      </Link>
-                    </div>
-                    <div className="mt-2 d-flex w-100">
-                      <Link
-                        to="/medical-verification"
-                        className="text-underline-none text-white btn btn-info btn-lg px-md-5 radius-30 text-white col-sm-12"
-                      >
-                        Medical Verification
                       </Link>
                     </div>
                   </div>
                 </div>
                 <div className="col-xl-7">
-                  <img src="./specimen.jpg" className="img-fluid p-4 h-100" alt="" />
+                  <img
+                    src="./specimen.jpg"
+                    className="img-fluid p-4 h-100"
+                    alt=""
+                  />
                 </div>
               </div>
               {/*end row*/}
