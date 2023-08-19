@@ -122,6 +122,7 @@ const ServiceCategoryList = () => {
       form.reset();
     }
   };
+  
 
   useEffect(() => {
     const fetchServicesAPI = async () => {
