@@ -80,7 +80,7 @@ const CreatePackage = () => {
       <div className="card">
         <div className="card-body">
           <div className="border p-3 rounded">
-            <div className="card-box bg-secondary p-2 text-white rounded">
+            <div className="card-box bg-primary p-2 text-white rounded">
               <h6 className="mb-0 text-uppercase ">Create New Package</h6>
             </div>
             <hr />
@@ -142,10 +142,10 @@ const CreatePackage = () => {
                               index === features.length - 1 ? (
                                 <button
                                   type="button"
-                                  className="btn btn-success"
+                                  className="btn btn-primary"
                                   onClick={incrementTableRow}
                                 >
-                                  <i class="bi bi-plus-circle mx-auto"></i>
+                                  <i className="bi bi-plus-circle mx-auto"></i>
                                 </button>
                               ) : (
                                 <button
@@ -153,7 +153,7 @@ const CreatePackage = () => {
                                   className="btn btn-danger"
                                   onClick={() => decrementTableRow(index)}
                                 >
-                                  <i class="bi bi-dash-circle mx-auto"></i>
+                                  <i className="bi bi-dash-circle mx-auto"></i>
                                 </button>
                               )}
                             </div>
