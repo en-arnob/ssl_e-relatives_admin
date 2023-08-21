@@ -277,6 +277,26 @@ const DashboardLayout = () => {
               accessPerm(2, 4) ||
               accessPerm(3, 4) ||
               accessPerm(3, 4)) && (
+              <MenuItem iconClass="bi bi-box-seam" title="Package">
+                <li>
+                  <Link to="/dashboard/package/create-package">
+                    <i className="bi bi-plus-circle-fill text-success" />
+                    Create New Package
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/package/manage-package">
+                    <i className="bi bi-pencil-square text-danger" />
+                    Manage Packages
+                  </Link>
+                </li>
+              </MenuItem>
+            )}
+            {/* {(accessPerm(5, 4) ||
+              accessPerm(4, 4) ||
+              accessPerm(2, 4) ||
+              accessPerm(3, 4) ||
+              accessPerm(3, 4)) && (
               <MenuItem iconClass="bi bi-people" title="Services">
                 <li>
                   <Link to="/dashboard/services/contact-messages">
@@ -285,7 +305,7 @@ const DashboardLayout = () => {
                   </Link>
                 </li>
               </MenuItem>
-            )}
+            )} */}
 
             {(accessPerm(7, 4) ||
               accessPerm(8, 4) ||
