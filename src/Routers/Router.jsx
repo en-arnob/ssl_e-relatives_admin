@@ -50,6 +50,7 @@ import ServiceCategoryList from "../Pages/UserManagement/ServiceCategoryList/Ser
 import ContactMessages from "../Pages/Services/ContactMessages/ContactMessages";
 import CreatePackage from "../Pages/Packages/CreatePackage";
 import ManagePackage from "../Pages/Packages/ManagePackage";
+import EditPackage from "../Pages/Packages/EditPackage";
 
 const router = createBrowserRouter([
   {
@@ -225,6 +226,7 @@ const router = createBrowserRouter([
       { path: "services/contact-messages", element: <ContactMessages /> },
       { path: "package/create-package", element: <CreatePackage /> },
       { path: "package/manage-package", element: <ManagePackage /> },
+      { path: "package/edit-package", element: <EditPackage /> },
       {
         path: "module",
         // element: <ModuleListPage />,
