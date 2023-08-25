@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ReactDatatable from "@ashvin27/react-datatable";
 import axios from "axios";
 import FadeLoader from "react-spinners/FadeLoader";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const override = {
   display: "block",
@@ -10,6 +12,7 @@ const override = {
 };
 
 const ManagePackage = () => {
+  const navigate = useNavigate();
   const [allPackage, setAllPackage] = useState([]);
   let [loading, setLoading] = useState(true);
   async function getAllPackage() {
@@ -26,6 +29,14 @@ const ManagePackage = () => {
       console.log(error);
     }
   }
+  const deleteHandler = async (id) => {
+    await axios
+      .delete(`${process.env.REACT_APP_API_BASE_URL}/package-management/${id}`)
+      .then((response) => toast.success("Package Deleted Successfully"))
+      .catch((error) => toast.error("Some error occured!"));
+    getAllPackage();
+  };
+
   useEffect(() => {
     getAllPackage();
   }, []);
@@ -98,6 +109,13 @@ const ManagePackage = () => {
             <button
               type="button"
               className="btn btn-primary btn-sm"
+              onClick={(e) => {
+                e.preventDefault();
+                // console.log(record);
+                navigate("/dashboard/package/edit-package", {
+                  state: { record: record },
+                });
+              }}
               style={{ marginRight: "5px" }}
             >
               <i className="fa fa-edit"></i>
@@ -145,7 +163,7 @@ const ManagePackage = () => {
                     <button
                       type="button"
                       className="btn btn-danger"
-                      // onClick={() => handlerOnDelete(deleteModalData)}
+                      onClick={() => deleteHandler(record.id)}
                       data-bs-dismiss="modal"
                     >
                       Yes
