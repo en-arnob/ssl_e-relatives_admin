@@ -70,7 +70,7 @@ const InvestigationManagement = () => {
     },
     {
       key: "preparation_duration",
-      text: "Preparation Duration (hr)",
+      text: "Preparation Duration (day)",
       sortable: true,
       align: "left",
     },

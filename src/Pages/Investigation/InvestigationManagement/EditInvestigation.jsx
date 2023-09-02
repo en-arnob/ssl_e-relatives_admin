@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { useLocation, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const notify = () => toast.error('Required fields can not be empty!');
+const notify = () => toast.error("Required fields can not be empty!");
 
 const EditInvestigation = () => {
   const navigate = useNavigate();
@@ -22,9 +22,9 @@ const EditInvestigation = () => {
   //instruments table data
   const [insData, setInsData] = useState([
     {
-      investigation_id: '',
-      instrument_id: '',
-      qty: '',
+      investigation_id: "",
+      instrument_id: "",
+      qty: "",
     },
   ]);
 
@@ -32,15 +32,15 @@ const EditInvestigation = () => {
     setInsData([
       ...insData,
       {
-        instrument_id: '',
-        qty: '',
+        instrument_id: "",
+        qty: "",
       },
     ]);
   };
 
   const delInstrument = (i) => {
     if (i < 0 || i >= insData.length) {
-      console.log('not delete');
+      console.log("not delete");
     } else {
       const deleteVal = [...insData];
       // console.log(i);
@@ -56,7 +56,7 @@ const EditInvestigation = () => {
     setChecked(!checked);
     setData({
       ...data,
-      status: checked ? '0' : '1',
+      status: checked ? "0" : "1",
     });
   };
   const selectReportTypeHandler = (e) => {
@@ -87,7 +87,7 @@ const EditInvestigation = () => {
     const fetchCategoryList = () => {
       axios
         .get(
-          `${process.env.REACT_APP_API_BASE_URL}/investigation/category/data/${e.target.value}`
+          `${process.env.REACT_APP_API_BASE_URL}/investigation/category/data/${e.target.value}`,
         )
         .then((response) => setCategoryList(response.data.data))
         .catch((err) => console.log(err));
@@ -132,7 +132,7 @@ const EditInvestigation = () => {
       instrumentTable: insData,
     };
     console.log(sendData);
-    if (data.code !== '') {
+    if (data.code !== "") {
       try {
         const url = `${process.env.REACT_APP_API_BASE_URL}/investigation/${investigationId}`;
         axios
@@ -147,7 +147,7 @@ const EditInvestigation = () => {
         console.log(insData);
         // console.log(selectedInstrument);
 
-        toast.success('Added Successfully!');
+        toast.success("Added Successfully!");
       } catch (error) {
         console.log(error);
       }
@@ -177,7 +177,7 @@ const EditInvestigation = () => {
   const fetchInstrumentList = () => {
     axios
       .get(
-        `${process.env.REACT_APP_API_BASE_URL}/investigation/instrument/data`
+        `${process.env.REACT_APP_API_BASE_URL}/investigation/instrument/data`,
       )
       .then((response) => setInstrumentList(response.data.data))
       .catch((err) => console.log(err));
@@ -185,7 +185,7 @@ const EditInvestigation = () => {
   const fetchData = () => {
     axios
       .get(
-        `${process.env.REACT_APP_API_BASE_URL}/investigation/${investigationId}`
+        `${process.env.REACT_APP_API_BASE_URL}/investigation/${investigationId}`,
       )
       .then((response) => {
         setData(response.data.data);
@@ -200,7 +200,7 @@ const EditInvestigation = () => {
   const fetchInvInst = () => {
     axios
       .get(
-        `${process.env.REACT_APP_API_BASE_URL}/investigation/investigation-instruments/${investigationId}`
+        `${process.env.REACT_APP_API_BASE_URL}/investigation/investigation-instruments/${investigationId}`,
       )
       .then((response) => {
         console.log(insData);
@@ -235,241 +235,241 @@ const EditInvestigation = () => {
 
   return (
     <>
-      <div className='row'>
-        <div className='col-xl-12 mx-auto'>
-          <div className='card'>
-            <div className='card-body'>
-              <form className='needs-validation'>
-                <div className='border p-4 rounded'>
-                  <div className='card-title d-flex align-items-center'>
-                    <h5 className='mb-0'>Update Investigation</h5>
+      <div className="row">
+        <div className="col-xl-12 mx-auto">
+          <div className="card">
+            <div className="card-body">
+              <form className="needs-validation">
+                <div className="border p-4 rounded">
+                  <div className="card-title d-flex align-items-center">
+                    <h5 className="mb-0">Update Investigation</h5>
                   </div>
                   <hr />
-                  <div class='row'>
-                    <div class='col-sm-6'>
-                      <div className='mb-3 row '>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputCode'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputCode"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Code <span style={{ color: 'red' }}>*</span>
+                          Code <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.code}
-                            name='code'
-                            type='text'
-                            className='form-control'
-                            id='inputCode'
+                            name="code"
+                            type="text"
+                            className="form-control"
+                            id="inputCode"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputName'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputName"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Name <span style={{ color: 'red' }}>*</span>
+                          Name <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.name}
-                            name='name'
-                            type='text'
-                            className='form-control'
-                            id='inputName'
+                            name="name"
+                            type="text"
+                            className="form-control"
+                            id="inputName"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputDName'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputDName"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Detailed Name <span style={{ color: 'red' }}>*</span>
+                          Detailed Name <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
-                            name='detailed_name'
+                            name="detailed_name"
                             value={data.detailed_name}
-                            type='text'
-                            className='form-control'
-                            id='inputDName'
+                            type="text"
+                            className="form-control"
+                            id="inputDName"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputRT'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputRT"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Report Title
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.report_title}
-                            name='report_title'
-                            type='text'
-                            className='form-control'
-                            id='inputRT'
+                            name="report_title"
+                            type="text"
+                            className="form-control"
+                            id="inputRT"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputRST'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputRST"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Report Sub Title
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.report_sub_title}
-                            name='report_sub_title'
-                            type='text'
-                            className='form-control'
-                            id='inputRST'
+                            name="report_sub_title"
+                            type="text"
+                            className="form-control"
+                            id="inputRST"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputPrice'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputPrice"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Price <span style={{ color: 'red' }}>*</span>
+                          Price <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.price}
-                            name='price'
-                            type='number'
-                            className='form-control'
-                            id='inputPrice'
+                            name="price"
+                            type="number"
+                            className="form-control"
+                            id="inputPrice"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='discounted_price'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="discounted_price"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Discounted Price
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.discounted_price}
-                            name='discounted_price'
-                            type='number'
-                            className='form-control'
-                            id='discounted_price'
+                            name="discounted_price"
+                            type="number"
+                            className="form-control"
+                            id="discounted_price"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='vat'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="vat"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           VAT %
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.vat_rate}
-                            name='vat_rate'
-                            type='number'
-                            className='form-control'
-                            id='vat'
+                            name="vat_rate"
+                            type="number"
+                            className="form-control"
+                            id="vat"
                             required
                           />
                         </div>
                       </div>
                     </div>
-                    <div class='col-sm-6'>
-                      <div className='mb-3 row '>
+                    <div class="col-sm-6">
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='commission_rate'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="commission_rate"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Commission Rate %
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.commission_rate}
-                            name='commission_rate'
-                            type='number'
-                            className='form-control'
-                            id='commission_rate'
+                            name="commission_rate"
+                            type="number"
+                            className="form-control"
+                            id="commission_rate"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='preparation_duration'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="preparation_duration"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Preparation Duration (hr)
+                          Preparation Duration (day)
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.preparation_duration}
-                            name='preparation_duration'
-                            type='number'
-                            className='form-control'
-                            id='inputName'
+                            name="preparation_duration"
+                            type="number"
+                            className="form-control"
+                            id="inputName"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='delivery_time'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="delivery_time"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Delivery Time
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <input
                             onChange={handleChange}
                             value={data.delivery_time}
-                            name='delivery_time'
-                            type='time'
-                            className='form-control'
-                            id='delivery_time'
+                            name="delivery_time"
+                            type="time"
+                            className="form-control"
+                            id="delivery_time"
                             required
                           />
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='room'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="room"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Room
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <select
                             value={data.room_id}
                             onChange={selectRoomHandler}
-                            className='single-select form-select'
+                            className="single-select form-select"
                           >
                             <option value={0}>Select Room</option>
                             {roomList.map((room) => (
@@ -478,18 +478,18 @@ const EditInvestigation = () => {
                           </select>
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='group'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="group"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Group <span style={{ color: 'red' }}>*</span>
+                          Group <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <select
                             value={data.investigation_group_id}
                             onChange={selectGroupHandler}
-                            className='single-select form-select'
+                            className="single-select form-select"
                           >
                             <option value={0}>Select Group</option>
                             {groupList.map((group) => (
@@ -498,18 +498,18 @@ const EditInvestigation = () => {
                           </select>
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='category'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="category"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
-                          Category <span style={{ color: 'red' }}>*</span>
+                          Category <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <select
                             value={data.investigation_category_id}
                             onChange={selectCategoryHandler}
-                            className='single-select form-select'
+                            className="single-select form-select"
                           >
                             <option value={0}>Select Category</option>
                             {categoryList.map((category) => (
@@ -520,18 +520,18 @@ const EditInvestigation = () => {
                           </select>
                         </div>
                       </div>
-                      <div className='mb-3 row '>
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='report_type'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="report_type"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Report Type
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <select
                             value={data.report_type}
                             onChange={selectReportTypeHandler}
-                            className='single-select form-select'
+                            className="single-select form-select"
                           >
                             <option value={0}>Select Report Type</option>
                             <option value={1}>Text</option>
@@ -542,12 +542,12 @@ const EditInvestigation = () => {
                     </div>
                   </div>
 
-                  <div class='row'>
-                    <div class='col-sm-12'>
+                  <div class="row">
+                    <div class="col-sm-12">
                       {/* Instrument Table */}
-                      <div className='table-responsive mt-3'>
-                        <table className='table align-middle'>
-                          <thead className='table-success'>
+                      <div className="table-responsive mt-3">
+                        <table className="table align-middle">
+                          <thead className="table-success">
                             <tr>
                               <th>Instrument (Unit)</th>
                               <th>Quantity</th>
@@ -559,14 +559,14 @@ const EditInvestigation = () => {
                             {insData.map((val, i) => (
                               <tr key={i}>
                                 <td>
-                                  <div className='col'>
+                                  <div className="col">
                                     <select
                                       value={val.instrument_id}
                                       onChange={(e) => {
                                         handleInstrumentChange(e, i);
                                       }}
-                                      name='instrument_id'
-                                      className='single-select form-select'
+                                      name="instrument_id"
+                                      className="single-select form-select"
                                     >
                                       <option value={0}>
                                         Select Instrument
@@ -581,16 +581,16 @@ const EditInvestigation = () => {
                                   </div>
                                 </td>
                                 <td>
-                                  <div className='col'>
+                                  <div className="col">
                                     <input
                                       onChange={(e) =>
                                         handleInstrumentChange(e, i)
                                       }
-                                      name='qty'
-                                      type='number'
+                                      name="qty"
+                                      type="number"
                                       value={val.qty}
-                                      className='form-control'
-                                      id='qty'
+                                      className="form-control"
+                                      id="qty"
                                       required
                                     />
                                   </div>
@@ -600,32 +600,32 @@ const EditInvestigation = () => {
                                 </td> */}
 
                                 <td>
-                                  <div className='table-actions d-flex align-items-center gap-3 fs-6'>
+                                  <div className="table-actions d-flex align-items-center gap-3 fs-6">
                                     {i === insData.length - 1 ? (
-                                      <div className='d-flex align-items-center gap-3 fs-6'>
+                                      <div className="d-flex align-items-center gap-3 fs-6">
                                         <a
-                                          href='javascript:;'
-                                          className='text-primary'
-                                          title='Views'
+                                          href="javascript:;"
+                                          className="text-primary"
+                                          title="Views"
                                           onClick={plusInstrument}
                                         >
-                                          <i className='bi bi-plus-circle-fill' />
+                                          <i className="bi bi-plus-circle-fill" />
                                         </a>
                                         {i > 0 ? (
                                           <a
-                                            href='javascript:;'
-                                            className='text-danger'
-                                            title='Delete'
+                                            href="javascript:;"
+                                            className="text-danger"
+                                            title="Delete"
                                             onClick={() => delInstrument(i)}
                                           >
-                                            <i className='bi bi-trash-fill' />
+                                            <i className="bi bi-trash-fill" />
                                           </a>
                                         ) : (
-                                          ''
+                                          ""
                                         )}
                                       </div>
                                     ) : (
-                                      ''
+                                      ""
                                     )}
                                   </div>
                                 </td>
@@ -635,47 +635,47 @@ const EditInvestigation = () => {
                         </table>
                       </div>
                     </div>
-                    <div className='col-sm-12'>
-                      <div className='mb-3 row '>
+                    <div className="col-sm-12">
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputInfo'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputInfo"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Info
                         </label>
-                        <div className='col-sm-9'>
+                        <div className="col-sm-9">
                           <textarea
                             onChange={handleChange}
                             value={data.info}
-                            name='info'
-                            type='textarea'
-                            className='form-control'
-                            id='inputInfo'
+                            name="info"
+                            type="textarea"
+                            className="form-control"
+                            id="inputInfo"
                             rows={2}
                           />
                         </div>
                       </div>
                     </div>
-                    <div className='col-sm-12'>
-                      <div className='mb-3 row '>
+                    <div className="col-sm-12">
+                      <div className="mb-3 row ">
                         <label
-                          htmlFor='inputInfo'
-                          className='col-sm-3 col-form-label d-flex justify-content-start'
+                          htmlFor="inputInfo"
+                          className="col-sm-3 col-form-label d-flex justify-content-start"
                         >
                           Status
                         </label>
-                        <div className='col-sm-9'>
-                          <div className='form-check d-flex align-items-center'>
+                        <div className="col-sm-9">
+                          <div className="form-check d-flex align-items-center">
                             <input
                               onChange={() => handleCheck()}
                               checked={checked}
-                              className='form-check-input mt-0 me-2'
-                              type='checkbox'
-                              id='flexCheckChecked'
+                              className="form-check-input mt-0 me-2"
+                              type="checkbox"
+                              id="flexCheckChecked"
                             />
                             <label
-                              className='form-check-label'
-                              htmlFor='flexCheckChecked'
+                              className="form-check-label"
+                              htmlFor="flexCheckChecked"
                             >
                               Active
                             </label>
@@ -685,26 +685,26 @@ const EditInvestigation = () => {
                     </div>
                   </div>
 
-                  <div className='row'>
-                    <div className='col-3'>
+                  <div className="row">
+                    <div className="col-3">
                       <button
-                        type='submit'
-                        className='btn btn-outline-secondary px-2 mb-3'
+                        type="submit"
+                        className="btn btn-outline-secondary px-2 mb-3"
                         onClick={(e) => {
                           e.preventDefault();
                           navigate(-1);
                         }}
                       >
-                        Go Back{' '}
+                        Go Back{" "}
                         <span>
-                          <i className='bi bi-arrow-left' />
+                          <i className="bi bi-arrow-left" />
                         </span>
                       </button>
                     </div>
-                    <div className='col-3'>
+                    <div className="col-3">
                       <button
-                        type='submit'
-                        className='btn btn-success px-5'
+                        type="submit"
+                        className="btn btn-success px-5"
                         onClick={handleSubmit}
                       >
                         Save
