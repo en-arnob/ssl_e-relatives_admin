@@ -325,6 +325,14 @@ const DashboardLayout = () => {
               <MenuItem iconClass="bi bi-gear" title="Settings">
                 {accessPerm(7, 4) && (
                   <li>
+                    <Link to="/dashboard/settings/file-upload-types">
+                      <i className="bi bi-arrow-right-short" />
+                      File Upload Types
+                    </Link>
+                  </li>
+                )}
+                {accessPerm(7, 4) && (
+                  <li>
                     <Link to="/dashboard/static-content-groups">
                       <i className="bi bi-arrow-right-short" />
                       Static Content Groups

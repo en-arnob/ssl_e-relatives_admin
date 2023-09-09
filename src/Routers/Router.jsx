@@ -51,6 +51,7 @@ import ContactMessages from "../Pages/Services/ContactMessages/ContactMessages";
 import CreatePackage from "../Pages/Packages/CreatePackage";
 import ManagePackage from "../Pages/Packages/ManagePackage";
 import EditPackage from "../Pages/Packages/EditPackage";
+import FileUploadTypePage from "../Pages/Settings/FileUploadTypePage/FileUploadTypePage";
 
 const router = createBrowserRouter([
   {
@@ -241,6 +242,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter props={2}>
             <ActivityListPage />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "settings/file-upload-types",
+        element: (
+          <PrivateRouter props={7}>
+            <FileUploadTypePage />
           </PrivateRouter>
         ),
       },
