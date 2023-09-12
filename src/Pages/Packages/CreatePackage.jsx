@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 const CreatePackage = () => {
   const [packageName, setPackageName] = useState("");
   const [price, setPrice] = useState("");
+  const [duration, setDuration] = useState("");
+  const [status, setStatus] = useState(true);
   const [features, setFeatures] = useState([
     {
       id: uuidv4(),
@@ -13,6 +15,7 @@ const CreatePackage = () => {
       value: "",
     },
   ]);
+
   function incrementTableRow() {
     setFeatures((prevFeatures) => {
       return [
@@ -25,11 +28,13 @@ const CreatePackage = () => {
       ];
     });
   }
+
   function decrementTableRow(index) {
     setFeatures((prevFeatures) => {
       return prevFeatures.filter((_, i) => i !== index);
     });
   }
+
   function handleOnChange(e, index) {
     const tgName = e.target.name;
     const tgValue = e.target.value;
@@ -45,19 +50,22 @@ const CreatePackage = () => {
       const obj = {
         packageName,
         price,
+        duration,
+        status: status ? 1 : 0,
       };
       obj.features = features[0].name !== "" ? features : [];
       // console.log(obj);
       try {
         const res = await axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/package-management`,
-          obj
+          obj,
         );
         // console.log(res);
         if (res.status === 200) {
           toast.success("Package Created Successfully");
           setPackageName("");
           setPrice("");
+          setDuration("");
           setFeatures([
             {
               id: uuidv4(),
@@ -67,7 +75,7 @@ const CreatePackage = () => {
           ]);
         }
       } catch (error) {
-        toast.success("Error Occured");
+        toast.success("Error Occurred");
         console.log(error);
       }
     } else {
@@ -80,7 +88,7 @@ const CreatePackage = () => {
       <div className="card">
         <div className="card-body">
           <div className="border p-3 rounded">
-            <div className="card-box bg-primary p-2 text-white rounded">
+            <div className="card-box">
               <h6 className="mb-0 text-uppercase ">Create New Package</h6>
             </div>
             <hr />
@@ -182,6 +190,47 @@ const CreatePackage = () => {
                   </div>
                 </div>
               </div>
+              <div className="row col-md-8 mb-2">
+                <div className="col-md-6 col-sm-5 mb-2 fs-6 fw-semibold ">
+                  Duration
+                </div>
+                <div className="col-md-6 col-sm-6">
+                  <div className="form-group">
+                    <select
+                      className="form-control"
+                      onChange={(e) => setDuration(e.target.value)}
+                    >
+                      <option value="">Select</option>
+                      <option value="1 Day">1 Day</option>
+                      <option value="1 Month">1 Month</option>
+                      <option value="1 Year">1 Year</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="row col-md-8 mb-2 mt-1">
+                <div className="col-md-6 col-sm-5 mb-2 fs-6 fw-semibold ">
+                  Status
+                </div>
+                <div className="col-md-6 col-sm-6">
+                  <div className="form-group">
+                    <input
+                      onChange={() => setStatus(!status)}
+                      className="form-check-input mt-0 me-2"
+                      type="checkbox"
+                      defaultChecked={status}
+                      id="flexCheckChecked"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      Active
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <div className="row col-md-8 mb-2 mt-4">
                 <div className="d-flex">
                   <button
