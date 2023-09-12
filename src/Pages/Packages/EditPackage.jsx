@@ -12,6 +12,8 @@ const EditPackage = () => {
   // console.log(packageObj);
   const [packageName, setPackageName] = useState(packageObj?.name);
   const [price, setPrice] = useState(packageObj?.price);
+  const [duration, setDuration] = useState(packageObj?.duration);
+  const [status, setStatus] = useState(true);
   const [features, setFeatures] = useState(
     packageObj?.package_features.length !== 0
       ? packageObj?.package_features
@@ -21,7 +23,7 @@ const EditPackage = () => {
             name: "",
             value: "",
           },
-        ]
+        ],
   );
 
   function incrementTableRow() {
@@ -36,11 +38,13 @@ const EditPackage = () => {
       ];
     });
   }
+
   function decrementTableRow(index) {
     setFeatures((prevFeatures) => {
       return prevFeatures.filter((_, i) => i !== index);
     });
   }
+
   function handleOnChange(e, index) {
     const tgName = e.target.name;
     const tgValue = e.target.value;
@@ -56,6 +60,8 @@ const EditPackage = () => {
       const obj = {
         packageName,
         price,
+        duration,
+        status: status ? 1 : 0,
       };
 
       obj.features = features[0].name !== "" ? features : [];
@@ -64,7 +70,7 @@ const EditPackage = () => {
       try {
         const res = await axios.put(
           `${process.env.REACT_APP_API_BASE_URL}/package-management/${packageObj?.id}`,
-          obj
+          obj,
         );
         console.log(res);
         if (res.status === 200) {
@@ -84,7 +90,7 @@ const EditPackage = () => {
       <div className="card">
         <div className="card-body">
           <div className="border p-3 rounded">
-            <div className="card-box bg-secondary text-light p-2 text-white rounded">
+            <div className="card-box">
               <h6 className="mb-0 text-uppercase ">Edit Package</h6>
             </div>
             <hr />
@@ -185,6 +191,46 @@ const EditPackage = () => {
                       onChange={(e) => setPrice(e.target.value)}
                       placeholder="Enter price"
                     />
+                  </div>
+                </div>
+              </div>
+              <div className="row col-md-8 mb-2">
+                <div className="col-md-6 col-sm-5 mb-2 fs-6 fw-semibold ">
+                  Duration
+                </div>
+                <div className="col-md-6 col-sm-6">
+                  <div className="form-group">
+                    <select
+                      className="form-control"
+                      onChange={(e) => setDuration(e.target.value)}
+                    >
+                      <option value="">Select</option>
+                      <option value="1 Day">1 Day</option>
+                      <option value="1 Month">1 Month</option>
+                      <option value="1 Year">1 Year</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="row col-md-8 mb-2 mt-1">
+                <div className="col-md-6 col-sm-5 mb-2 fs-6 fw-semibold ">
+                  Status
+                </div>
+                <div className="col-md-6 col-sm-6">
+                  <div className="form-group">
+                    <input
+                      onChange={() => setStatus(!status)}
+                      className="form-check-input mt-0 me-2"
+                      type="checkbox"
+                      defaultChecked={status}
+                      id="flexCheckChecked"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      Active
+                    </label>
                   </div>
                 </div>
               </div>

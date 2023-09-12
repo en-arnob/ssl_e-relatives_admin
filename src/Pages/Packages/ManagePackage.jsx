@@ -15,10 +15,11 @@ const ManagePackage = () => {
   const navigate = useNavigate();
   const [allPackage, setAllPackage] = useState([]);
   let [loading, setLoading] = useState(true);
+
   async function getAllPackage() {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/package-management`
+        `${process.env.REACT_APP_API_BASE_URL}/package-management`,
       );
       // console.log(res.data.data);
       if (res) {
@@ -29,6 +30,7 @@ const ManagePackage = () => {
       console.log(error);
     }
   }
+
   const deleteHandler = async (id) => {
     await axios
       .delete(`${process.env.REACT_APP_API_BASE_URL}/package-management/${id}`)
@@ -93,6 +95,24 @@ const ManagePackage = () => {
             {record?.price}
           </>
         );
+      },
+    },
+    {
+      key: "duration",
+      text: "Duration",
+      className: "duration",
+      sortable: true,
+      cell: (record) => {
+        return <>{record?.duration}</>;
+      },
+    },
+    {
+      key: "status",
+      text: "Status",
+      className: "status",
+      sortable: true,
+      cell: (record) => {
+        return <>{record?.status === 1 ? "Active" : "Inactive"}</>;
       },
     },
     {
@@ -206,7 +226,7 @@ const ManagePackage = () => {
         <div className="card">
           <div className="card-body">
             <div className="border p-3 rounded">
-              <div className="card-box bg-primary p-2 text-white rounded">
+              <div className="card-box">
                 <h6 className="mb-0 text-uppercase">Package Management</h6>
               </div>
 
